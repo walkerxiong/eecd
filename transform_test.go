@@ -1,4 +1,4 @@
-package conversion
+package cced
 
 import (
 	"io/ioutil"

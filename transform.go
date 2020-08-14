@@ -1,8 +1,8 @@
-package conversion
+package cced
 
 import (
-	"github.com/gbabyX/conversion/charset/gbk"
-	"github.com/gbabyX/conversion/charset/utf8"
+	"github.com/gbabyX/cced/charset/gbk"
+	"github.com/gbabyX/cced/charset/utf8"
 )
 
 func GbkToUtf8(data []byte) ([]byte, error) {

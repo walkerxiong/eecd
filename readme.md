@@ -51,7 +51,5 @@ fmt.Printf("%s",res) // output : utf8 encode
 
 ## 编码转换支持类型
 
-- GBK -> UTF8
-- GB2312 -> UTF8
-- GBK -> UTF16
-- GBK -> UTF16
+- GBK/GB2312 -> UTF8
+- GBK/GB2312 -> UTF16

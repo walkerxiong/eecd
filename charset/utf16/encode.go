@@ -1,21 +1,26 @@
 package utf16
 
-func Encode(data []rune) ([]byte, error) {
+import "github.com/gbabyX/cced/charset/types"
+
+func Encode(source []byte) ([]byte, error) {
 	var (
-		dst []byte
+		dst []types.Word
 		err error
 	)
+	data := types.BytesToDWords(source)
 	for _, code := range data {
-		if code <= 0xFFFF {
-			dst = append(dst, byte(code>>8), byte(code))
+		if code < TwoBytesBoundary {
+			dst = append(dst, types.Word(code))
+			continue
 		}
-		vx := code - 0x10000
-		vh := uint16(vx >> 10)
-		vl := uint16(0x03ff & vx)
-		w1 := 0xD800 | vh
-		w2 := 0xDC00 | vl
-		dst = append(dst, byte(w1>>8), byte(w1), byte(w2>>8), byte(w2))
+		vx := code - TwoBytesBoundary
+		vh := types.Word(vx >> 10)
+		vl := types.Word(0x03ff & vx)
+		w1 := HighCode | vh
+		w2 := LowCode | vl
+		dst = append(dst, w1)
+		dst = append(dst, w2)
 	}
 
-	return dst, err
+	return types.WordsToBytes(dst), err
 }

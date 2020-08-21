@@ -10,9 +10,10 @@ func TestGbkToUtf8(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
+	t.Logf("%s \n", buff)
 	res, err := GbkToUtf8(buff)
 	if err != nil {
 		t.Fatal(err)
 	}
-	t.Logf("transform before : %s , after : %s", buff, res)
+	t.Logf("%s", res)
 }

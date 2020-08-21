@@ -1,7 +1,10 @@
 package utf8
 
-func Encode(data []rune) ([]byte, error) {
+import "github.com/gbabyX/cced/charset/types"
+
+func Encode(source []byte) ([]byte, error) {
 	var dst []byte
+	data := types.BytesToDWords(source)
 	for _, item := range data {
 		if item < 0x80 {
 			dst = append(dst, byte(item))

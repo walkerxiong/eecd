@@ -1,6 +1,9 @@
 package gbk
 
-import "errors"
+import (
+	"errors"
+	"github.com/gbabyX/cced/charset/types"
+)
 
 var ErrBytes = errors.New("invalid bytes")
 
@@ -8,9 +11,9 @@ func init() {
 	ScanCp936Table()
 }
 
-func Decode(data []byte) ([]rune, error) {
+func Decode(data []byte) ([]byte, error) {
 	var (
-		dst  []rune
+		dst  []types.DWord
 		size = 0
 	)
 	for i, l := 0, len(data); i < l; i += size {
@@ -19,7 +22,7 @@ func Decode(data []byte) ([]rune, error) {
 		if h < 0x80 {
 			// acii2 code
 			size = 1
-			dst = append(dst, rune(h))
+			dst = append(dst, types.DWord(h))
 		} else if h < 0xff {
 			size = 2
 			var low byte
@@ -29,10 +32,10 @@ func Decode(data []byte) ([]rune, error) {
 				return nil, ErrBytes
 			}
 			if low > 0x40 && low < 0xFF {
-				var code = uint16(h)<<8 + uint16(low)
+				var code = types.DWord(h)<<8 + types.DWord(low)
 				var index = code - 0x8141
 				if code == TransformUnicodeTable[index][0] {
-					dst = append(dst, rune(TransformUnicodeTable[index][1]))
+					dst = append(dst, TransformUnicodeTable[index][1])
 				} else {
 					return nil, ErrBytes
 				}
@@ -42,5 +45,5 @@ func Decode(data []byte) ([]rune, error) {
 		}
 
 	}
-	return dst, nil
+	return types.DWordsToBytes(dst), nil
 }

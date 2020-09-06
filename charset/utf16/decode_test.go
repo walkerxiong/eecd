@@ -8,6 +8,6 @@ func TestDecode(t *testing.T) {
 	if e != nil {
 		t.Fatal(e)
 	}
-	// 10437
+	// u+10437
 	t.Logf("%x", r)
 }

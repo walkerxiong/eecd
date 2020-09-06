@@ -53,3 +53,5 @@ fmt.Printf("%s",res) // output : utf8 encode
 
 - GBK/GB2312 -> UTF8
 - GBK/GB2312 -> UTF16
+- UTF8 -> UTF16
+- UTF16 -> UTF16
